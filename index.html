@@ -208,7 +208,8 @@
       }
       resultDiv.innerHTML = "<p>Sedang memproses...</p>";
       try {
-        const res = await fetch(`https://api.ryzumi.vip/api/downloader/tiktok?url=${encodeURIComponent(input)}`);
+        const res = await fetch(`curl -X 'GET' \
+  'https://api.ryzumi.vip/api/downloader/v2/ttdl?url=${encodeURIComponent(input)}`);
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         if (data.result && data.result.video) {
