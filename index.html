@@ -134,7 +134,6 @@
     <div class="result" id="bratResult"></div>
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
-
   <div class="container" id="bratvid" style="display:none;">
     <h1>Brat Video Jir 😹</h1>
     <input type="text" id="bratvidInput" placeholder="Masukkan teks...">
@@ -150,50 +149,85 @@
     <div class="result" id="iqcResult"></div>
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
+<h2>Visitors 😳</h2>
+<canvas id="visitorChart"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  function openPage(page) {
+    document.getElementById("home").style.display = "none";
+    document.getElementById(page).style.display = "block";
+  }
 
-  <script>
-    function openPage(page) {
-      document.getElementById("home").style.display = "none";
-      document.getElementById(page).style.display = "block";
+  function backHome() {
+    document.querySelectorAll(".container").forEach(c => c.style.display = "none");
+    document.getElementById("home").style.display = "block";
+  }
+
+  async function generate(type) {
+    const input = document.getElementById(type + "Input").value.trim();
+    const resultDiv = document.getElementById(type + "Result");
+
+    if (!input) {
+      resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
+      return;
     }
-    function backHome() {
-      document.querySelectorAll(".container").forEach(c => c.style.display = "none");
-      document.getElementById("home").style.display = "block";
+
+    resultDiv.innerHTML = "<p>Sedang membuat...</p>";
+
+    let endpoint = "";
+    if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
+    if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
+    if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
+
+    try {
+      const res = await fetch(endpoint);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      if (type === "brat")
+        resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
+      if (type === "bratvid")
+        resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
+      if (type === "iqc")
+        resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
+    } catch (e) {
+      resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
     }
+  }
 
-    async function generate(type) {
-      const input = document.getElementById(type + "Input").value.trim();
-      const resultDiv = document.getElementById(type + "Result");
+  // ====== Visitor Chart ======
+  const ctx = document.getElementById('visitorChart')?.getContext('2d');
+  let visitorChart;
 
-      if (!input) {
-        resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
-        return;
+  async function trackVisitors() {
+    if (!ctx) return; // biar aman kalau canvas nggak ada
+    const res = await fetch("https://api.countapi.xyz/hit/bratify-web/visitors");
+    const data = await res.json();
+    const count = data.value;
+
+    const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
+    const values = [2, 4, 6, 10, 15, 20, count];
+
+    if (visitorChart) visitorChart.destroy();
+    visitorChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: days,
+        datasets: [{
+          label: "Pengunjung",
+          data: values,
+          borderColor: "#ff4d6d",
+          backgroundColor: "rgba(255,77,109,0.2)",
+          fill: true,
+          tension: 0.3
+        }]
       }
+    });
+  }
 
-      resultDiv.innerHTML = "<p>Sedang membuat...</p>";
-
-      let endpoint = "";
-      if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
-      if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
-      if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
-
-      try {
-        const res = await fetch(endpoint);
-        if (!res.ok) throw new Error("HTTP " + res.status);
-
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-
-        if (type === "brat")
-          resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
-        if (type === "bratvid")
-          resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
-        if (type === "iqc")
-          resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
-      } catch (e) {
-        resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
-      }
-    }
-  </script>
+  trackVisitors();
+</script>
 </body>
   </html>
