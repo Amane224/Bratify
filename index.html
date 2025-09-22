@@ -52,6 +52,7 @@
       background: #e63655;
       transform: scale(1.05);
     }
+    /* === Style Kawaii untuk tombol Generate === */
     .generate-btn {
       margin-top: 12px;
       background: linear-gradient(135deg, #ff8fab, #d8b4fe);
@@ -69,7 +70,9 @@
       transform: scale(1.08);
       box-shadow: 0 6px 16px rgba(255, 105, 180, 0.6);
     }
-    .result { margin-top: 20px; }
+    .result {
+      margin-top: 20px;
+    }
     img, video {
       max-width: 100%;
       border-radius: 15px;
@@ -86,7 +89,9 @@
       text-decoration: none;
       transition: background 0.3s;
     }
-    .download-btn:hover { background: #ff9db0; }
+    .download-btn:hover {
+      background: #ff9db0;
+    }
     .back {
       margin-top: 15px;
       display: inline-block;
@@ -112,19 +117,16 @@
   </style>
 </head>
 <body>
-  <!-- Halaman Home -->
   <div class="container" id="home">
     <h1>Abecede</h1>
     <div class="menu">
       <button onclick="openPage('brat')">Brat Foto Loh Yak</button>
       <button onclick="openPage('bratvid')">Brat Video Loh Yak</button>
       <button onclick="openPage('iqc')">Ipong Qc Loh Yak</button>
-      <button onclick="openPage('ttdl')">TT Downloader</button>
     </div>
     <a href="https://whatsapp.com/channel/0029Vb6HTyy3GJP3qLtjMc0j" target="_blank" class="whacap">Whacap Ceha Ku</a>
   </div>
 
-  <!-- Brat Foto -->
   <div class="container" id="brat" style="display:none;">
     <h1>Brat Foto Jir😹</h1>
     <input type="text" id="bratInput" placeholder="Masukkan teks...">
@@ -133,7 +135,6 @@
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <!-- Brat Video -->
   <div class="container" id="bratvid" style="display:none;">
     <h1>Brat Video Jir 😹</h1>
     <input type="text" id="bratvidInput" placeholder="Masukkan teks...">
@@ -142,7 +143,6 @@
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <!-- IQC -->
   <div class="container" id="iqc" style="display:none;">
     <h1>Ipong Qc 😜</h1>
     <input type="text" id="iqcInput" placeholder="Masukkan teks...">
@@ -151,8 +151,6 @@
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <!-- TikTok Downloader -->
-  
   <script>
     function openPage(page) {
       document.getElementById("home").style.display = "none";
@@ -166,33 +164,36 @@
     async function generate(type) {
       const input = document.getElementById(type + "Input").value.trim();
       const resultDiv = document.getElementById(type + "Result");
+
       if (!input) {
         resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
         return;
       }
+
       resultDiv.innerHTML = "<p>Sedang membuat...</p>";
+
       let endpoint = "";
       if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
       if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
       if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
+
       try {
         const res = await fetch(endpoint);
         if (!res.ok) throw new Error("HTTP " + res.status);
+
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
+
         if (type === "brat")
-          resultDiv.innerHTML = `<img src="${url}"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
+          resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
         if (type === "bratvid")
           resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
         if (type === "iqc")
-          resultDiv.innerHTML = `<img src="${url}"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
+          resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
       } catch (e) {
         resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
       }
     }
-
-    // TikTok Downloader
-    
   </script>
 </body>
 </html>
