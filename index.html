@@ -1,3 +1,6 @@
+);
+    box-shadow: 0 6px 16px rgba(255, 105, 180, 0.6);
+  }
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -74,10 +77,7 @@
   }
 
   .generate-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 16px rgba(255, 105, 180, 0.6);
-  }
-
+    transform: scale(1.08
   .result {
     margin-top: 20px;
   }
@@ -171,92 +171,243 @@
     <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <div class="container" id="iqc" style="display:none;">
-    <h1>Ipong Qc 😜</h1>
-    <input type="text" id="iqcInput" placeholder="Masukkan teks...">
-    <button class="generate-btn" onclick="generate('iqc')">Generate</button>
-    <div class="result" id="iqcResult"></div>
-    <a href="#" class="back" onclick="backHome()">Kembali</a>
-  </div>
-<h2>Visitors 😳</h2>
-<canvas id="visitorChart"></canvas>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bratify Tools</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  function openPage(page) {
-    document.getElementById("home").style.display = "none";
-    document.getElementById(page).style.display = "block";
-  }
+  <style>
+    body {
+      font-family: "Comic Sans MS", "Poppins", cursive;
+      background: linear-gradient(135deg, #f9a8d4, #fbcfe8);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      animation: pop 0.5s ease;
+    }
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0.5; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: #ff4d6d;
+      font-weight: bold;
+      text-shadow: 1px 1px #ffe4ec;
+    }
+    .menu button {
+      display: block;
+      width: 100%;
+      margin-bottom: 12px;
+      background: #ff4d6d;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .menu button:hover {
+      background: #e63655;
+      transform: scale(1.05);
+    }
+    .generate-btn {
+      margin-top: 12px;
+      background: linear-gradient(135deg, #ff8fab, #d8b4fe);
+      border: none;
+      padding: 12px 20px;
+      border-radius: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .generate-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 16px rgba(255, 105, 180, 0.6);
+    }
+    .result { margin-top: 15px; }
+    img, video {
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .download-btn {
+      margin-top: 10px;
+      display: inline-block;
+      background: #ffb6c1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: #333;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .download-btn:hover { background: #ff9db0; }
+    .back {
+      margin-top: 15px;
+      display: inline-block;
+      text-decoration: none;
+      background: #ccc;
+      padding: 8px 14px;
+      border-radius: 8px;
+      color: #333;
+      font-size: 0.9rem;
+    }
+    .whacap {
+      margin-top: 15px;
+      display: inline-block;
+      text-decoration: none;
+      background: #25D366;
+      padding: 10px 18px;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    /* ukuran chart kecil */
+    #visitorChart {
+      max-width: 260px;
+      max-height: 160px;
+      margin: 0 auto 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Halaman Home -->
+  <div id="home" class="container">
+    <h1>Bratify Tools</h1>
+    <canvas id="visitorChart"></canvas>
+    <div class="menu">
+      <button onclick="openPage('brat')">Brat Foto</button>
+      <button onclick="openPage('bratvid')">Brat Video</button>
+      <button onclick="openPage('iqc')">IQC Foto</button>
+    </div>
+    <a href="https://wa.me/6281234567890" class="whacap">Whacap Ceha Ku</a>
+  </div>
 
-  function backHome() {
-    document.querySelectorAll(".container").forEach(c => c.style.display = "none");
-    document.getElementById("home").style.display = "block";
-  }
+  <!-- Halaman Brat Foto -->
+  <div id="brat" class="container" style="display:none;">
+    <h1>Brat Foto</h1>
+    <input type="text" id="bratInput" placeholder="Masukkan teks">
+    <button class="generate-btn" onclick="generate('brat')">Generate</button>
+    <div id="bratResult" class="result"></div>
+    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+  </div>
 
-  async function generate(type) {
-    const input = document.getElementById(type + "Input").value.trim();
-    const resultDiv = document.getElementById(type + "Result");
+  <!-- Halaman Brat Video -->
+  <div id="bratvid" class="container" style="display:none;">
+    <h1>Brat Video</h1>
+    <input type="text" id="bratvidInput" placeholder="Masukkan teks">
+    <button class="generate-btn" onclick="generate('bratvid')">Generate</button>
+    <div id="bratvidResult" class="result"></div>
+    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+  </div>
 
-    if (!input) {
-      resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
-      return;
+  <!-- Halaman IQC Foto -->
+  <div id="iqc" class="container" style="display:none;">
+    <h1>IQC Foto</h1>
+    <input type="text" id="iqcInput" placeholder="Masukkan teks">
+    <button class="generate-btn" onclick="generate('iqc')">Generate</button>
+    <div id="iqcResult" class="result"></div>
+    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+  </div>
+
+  <script>
+    function openPage(page) {
+      document.getElementById("home").style.display = "none";
+      document.getElementById(page).style.display = "block";
+    }
+    function backHome() {
+      document.querySelectorAll(".container").forEach(c => c.style.display = "none");
+      document.getElementById("home").style.display = "block";
     }
 
-    resultDiv.innerHTML = "<p>Sedang membuat...</p>";
+    async function generate(type) {
+      const input = document.getElementById(type + "Input").value.trim();
+      const resultDiv = document.getElementById(type + "Result");
 
-    let endpoint = "";
-    if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
-    if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
-    if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
-
-    try {
-      const res = await fetch(endpoint);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-
-      if (type === "brat")
-        resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
-      if (type === "bratvid")
-        resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
-      if (type === "iqc")
-        resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
-    } catch (e) {
-      resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
-    }
-  }
-
-  // ====== Visitor Chart ======
-  const ctx = document.getElementById('visitorChart')?.getContext('2d');
-  let visitorChart;
-
-  async function trackVisitors() {
-    if (!ctx) return; // biar aman kalau canvas nggak ada
-    const res = await fetch("https://api.countapi.xyz/hit/bratify-web/visitors");
-    const data = await res.json();
-    const count = data.value;
-
-    const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
-    const values = [2, 4, 6, 10, 15, 20, count];
-
-    if (visitorChart) visitorChart.destroy();
-    visitorChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: days,
-        datasets: [{
-          label: "Pengunjung",
-          data: values,
-          borderColor: "#ff4d6d",
-          backgroundColor: "rgba(255,77,109,0.2)",
-          fill: true,
-          tension: 0.3
-        }]
+      if (!input) {
+        resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
+        return;
       }
-    });
-  }
 
-  trackVisitors();
-</script>
+      resultDiv.innerHTML = "<p>Sedang membuat...</p>";
+
+      let endpoint = "";
+      if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
+      if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
+      if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
+
+      try {
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+
+        if (type === "brat")
+          resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
+        if (type === "bratvid")
+          resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
+        if (type === "iqc")
+          resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
+      } catch (e) {
+        resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
+      }
+    }
+
+    // === Grafik Pengunjung ===
+    const ctx = document.getElementById('visitorChart').getContext('2d');
+    let visitorChart;
+
+    async function trackVisitors() {
+      const res = await fetch("https://api.countapi.xyz/hit/bratify-web/visitors");
+      const data = await res.json();
+      const count = data.value;
+
+      const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
+      const values = [2, 4, 6, 10, 15, 20, count];
+
+      if (visitorChart) visitorChart.destroy();
+      visitorChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: days,
+          datasets: [{
+            label: "Pengunjung",
+            data: values,
+            borderColor: "#ff4d6d",
+            backgroundColor: "rgba(255,77,109,0.2)",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { display: false } }
+        }
+      });
+    }
+    trackVisitors();
+  </script>
 </body>
-  </html>
+</html>
