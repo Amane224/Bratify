@@ -152,14 +152,7 @@
   </div>
 
   <!-- TikTok Downloader -->
-  <div class="container" id="ttdl" style="display:none;">
-    <h1>TT Downloader 😔</h1>
-    <input type="text" id="ttdlInput" placeholder="Masukkan link TikTok...">
-    <button class="generate-btn" onclick="downloadTT()">Download</button>
-    <div class="result" id="ttdlResult"></div>
-    <a href="#" class="back" onclick="backHome()">Kembali</a>
-  </div>
-
+  
   <script>
     function openPage(page) {
       document.getElementById("home").style.display = "none";
@@ -199,31 +192,7 @@
     }
 
     // TikTok Downloader
-    async function downloadTT() {
-      const input = document.getElementById("ttdlInput").value.trim();
-      const resultDiv = document.getElementById("ttdlResult");
-      if (!input) {
-        resultDiv.innerHTML = "<p style='color:red;'>Masukkan link TikTok dulu!</p>";
-        return;
-      }
-      resultDiv.innerHTML = "<p>Sedang memproses...</p>";
-      try {
-        const res = await fetch(`curl -X 'GET' \
-  'https://api.ryzumi.vip/api/downloader/v2/ttdl?url=${encodeURIComponent(input)}`);
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        const data = await res.json();
-        if (data.result && data.result.video) {
-          resultDiv.innerHTML = `
-            <video controls src="${data.result.video}" style="max-width:100%; border-radius:10px;"></video>
-            <br><a href="${data.result.video}" download="tiktok.mp4" class="download-btn">Download Video</a>
-          `;
-        } else {
-          resultDiv.innerHTML = "<p style='color:red;'>Gagal mengambil video.</p>";
-        }
-      } catch (e) {
-        resultDiv.innerHTML = `<p style="color:red;">Error: ${e.message}</p>`;
-      }
-    }
+    
   </script>
 </body>
 </html>
