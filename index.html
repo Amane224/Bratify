@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bratify Tools</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Ga Tawu Pengen Jadi Dev</title>
   <style>
     body {
       font-family: "Comic Sans MS", "Poppins", cursive;
@@ -17,7 +16,7 @@
     }
     .container {
       background: #fff;
-      padding: 20px 25px;
+      padding: 25px 30px;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
       max-width: 420px;
@@ -30,8 +29,8 @@
       to { transform: scale(1); opacity: 1; }
     }
     h1 {
-      font-size: 1.6rem;
-      margin-bottom: 15px;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
       color: #ff4d6d;
       font-weight: bold;
       text-shadow: 1px 1px #ffe4ec;
@@ -70,7 +69,7 @@
       transform: scale(1.08);
       box-shadow: 0 6px 16px rgba(255, 105, 180, 0.6);
     }
-    .result { margin-top: 15px; }
+    .result { margin-top: 20px; }
     img, video {
       max-width: 100%;
       border-radius: 15px;
@@ -110,52 +109,55 @@
       font-size: 1rem;
       box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
-    /* ukuran chart kecil */
-    #visitorChart {
-      max-width: 260px;
-      max-height: 160px;
-      margin: 0 auto 15px;
-    }
   </style>
 </head>
 <body>
   <!-- Halaman Home -->
-  <div id="home" class="container">
-    <h1>Bratify Tools</h1>
-    <canvas id="visitorChart"></canvas>
+  <div class="container" id="home">
+    <h1>Abecede</h1>
     <div class="menu">
-      <button onclick="openPage('brat')">Brat Foto</button>
-      <button onclick="openPage('bratvid')">Brat Video</button>
-      <button onclick="openPage('iqc')">IQC Foto</button>
+      <button onclick="openPage('brat')">Brat Foto Loh Yak</button>
+      <button onclick="openPage('bratvid')">Brat Video Loh Yak</button>
+      <button onclick="openPage('iqc')">Ipong Qc Loh Yak</button>
+      <button onclick="openPage('ttdl')">TT Downloader</button>
     </div>
-    <a href="https://wa.me/6281234567890" class="whacap">Whacap Ceha Ku</a>
+    <a href="https://whatsapp.com/channel/0029Vb6HTyy3GJP3qLtjMc0j" target="_blank" class="whacap">Whacap Ceha Ku</a>
   </div>
 
-  <!-- Halaman Brat Foto -->
-  <div id="brat" class="container" style="display:none;">
-    <h1>Brat Foto</h1>
-    <input type="text" id="bratInput" placeholder="Masukkan teks">
+  <!-- Brat Foto -->
+  <div class="container" id="brat" style="display:none;">
+    <h1>Brat Foto Jir😹</h1>
+    <input type="text" id="bratInput" placeholder="Masukkan teks...">
     <button class="generate-btn" onclick="generate('brat')">Generate</button>
-    <div id="bratResult" class="result"></div>
-    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+    <div class="result" id="bratResult"></div>
+    <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <!-- Halaman Brat Video -->
-  <div id="bratvid" class="container" style="display:none;">
-    <h1>Brat Video</h1>
-    <input type="text" id="bratvidInput" placeholder="Masukkan teks">
+  <!-- Brat Video -->
+  <div class="container" id="bratvid" style="display:none;">
+    <h1>Brat Video Jir 😹</h1>
+    <input type="text" id="bratvidInput" placeholder="Masukkan teks...">
     <button class="generate-btn" onclick="generate('bratvid')">Generate</button>
-    <div id="bratvidResult" class="result"></div>
-    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+    <div class="result" id="bratvidResult"></div>
+    <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
-  <!-- Halaman IQC Foto -->
-  <div id="iqc" class="container" style="display:none;">
-    <h1>IQC Foto</h1>
-    <input type="text" id="iqcInput" placeholder="Masukkan teks">
+  <!-- IQC -->
+  <div class="container" id="iqc" style="display:none;">
+    <h1>Ipong Qc 😜</h1>
+    <input type="text" id="iqcInput" placeholder="Masukkan teks...">
     <button class="generate-btn" onclick="generate('iqc')">Generate</button>
-    <div id="iqcResult" class="result"></div>
-    <a href="javascript:void(0)" class="back" onclick="backHome()">Kembali</a>
+    <div class="result" id="iqcResult"></div>
+    <a href="#" class="back" onclick="backHome()">Kembali</a>
+  </div>
+
+  <!-- TikTok Downloader -->
+  <div class="container" id="ttdl" style="display:none;">
+    <h1>TT Downloader 😔</h1>
+    <input type="text" id="ttdlInput" placeholder="Masukkan link TikTok...">
+    <button class="generate-btn" onclick="downloadTT()">Download</button>
+    <div class="result" id="ttdlResult"></div>
+    <a href="#" class="back" onclick="backHome()">Kembali</a>
   </div>
 
   <script>
@@ -171,70 +173,56 @@
     async function generate(type) {
       const input = document.getElementById(type + "Input").value.trim();
       const resultDiv = document.getElementById(type + "Result");
-
       if (!input) {
         resultDiv.innerHTML = "<p style='color:red;'>Masukkan teks dulu!</p>";
         return;
       }
-
       resultDiv.innerHTML = "<p>Sedang membuat...</p>";
-
       let endpoint = "";
       if (type === "brat") endpoint = `https://api.yupra.my.id/api/image/brat?text=${encodeURIComponent(input)}`;
       if (type === "bratvid") endpoint = `https://api.ryzumi.vip/api/image/brat/animated?text=${encodeURIComponent(input)}`;
       if (type === "iqc") endpoint = `https://api.ryzumi.vip/api/image/iqc?text=${encodeURIComponent(input)}`;
-
       try {
         const res = await fetch(endpoint);
         if (!res.ok) throw new Error("HTTP " + res.status);
-
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
-
         if (type === "brat")
-          resultDiv.innerHTML = `<img src="${url}" alt="Brat Foto"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
+          resultDiv.innerHTML = `<img src="${url}"><br><a href="${url}" download="brat-foto.png" class="download-btn">Download</a>`;
         if (type === "bratvid")
           resultDiv.innerHTML = `<video controls autoplay loop src="${url}"></video><br><a href="${url}" download="brat-video.mp4" class="download-btn">Download</a>`;
         if (type === "iqc")
-          resultDiv.innerHTML = `<img src="${url}" alt="IQC Foto"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
+          resultDiv.innerHTML = `<img src="${url}"><br><a href="${url}" download="iqc-foto.png" class="download-btn">Download</a>`;
       } catch (e) {
         resultDiv.innerHTML = `<p style="color:red;">Gagal: ${e.message}</p>`;
       }
     }
 
-    // === Grafik Pengunjung ===
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-    let visitorChart;
-
-    async function trackVisitors() {
-      const res = await fetch("https://api.countapi.xyz/hit/bratify-web/visitors");
-      const data = await res.json();
-      const count = data.value;
-
-      const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
-      const values = [2, 4, 6, 10, 15, 20, count];
-
-      if (visitorChart) visitorChart.destroy();
-      visitorChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: days,
-          datasets: [{
-            label: "Pengunjung",
-            data: values,
-            borderColor: "#ff4d6d",
-            backgroundColor: "rgba(255,77,109,0.2)",
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          plugins: { legend: { display: false } },
-          scales: { y: { display: false } }
+    // TikTok Downloader
+    async function downloadTT() {
+      const input = document.getElementById("ttdlInput").value.trim();
+      const resultDiv = document.getElementById("ttdlResult");
+      if (!input) {
+        resultDiv.innerHTML = "<p style='color:red;'>Masukkan link TikTok dulu!</p>";
+        return;
+      }
+      resultDiv.innerHTML = "<p>Sedang memproses...</p>";
+      try {
+        const res = await fetch(`https://api.ryzumi.vip/api/downloader/tiktok?url=${encodeURIComponent(input)}`);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        if (data.result && data.result.video) {
+          resultDiv.innerHTML = `
+            <video controls src="${data.result.video}" style="max-width:100%; border-radius:10px;"></video>
+            <br><a href="${data.result.video}" download="tiktok.mp4" class="download-btn">Download Video</a>
+          `;
+        } else {
+          resultDiv.innerHTML = "<p style='color:red;'>Gagal mengambil video.</p>";
         }
-      });
+      } catch (e) {
+        resultDiv.innerHTML = `<p style="color:red;">Error: ${e.message}</p>`;
+      }
     }
-    trackVisitors();
   </script>
 </body>
-          </html>
+</html>
